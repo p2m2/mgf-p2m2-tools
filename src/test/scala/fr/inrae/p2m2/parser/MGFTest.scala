@@ -6,6 +6,6 @@ object MGFTest extends TestSuite {
   def tests: Tests = Tests {
     val resource = Source.fromFile("src/test/resources/ex1.mgf")
     val lines : Iterator[String] = resource.getLines
-    println(lines)
+    println(MGF.parse2(lines))
   }
 }
