@@ -20,7 +20,7 @@ case object MGF {
 
     val initParsing: FeaturesBufferWithCurrentKey = (None, Map(), Map())
 
-    val msAndIntensity: Regex = "([0-9\\.]+)\\s([0-9\\.E]+)".r
+    val msAndIntensity: Regex = "([0-9.]+)\\s([0-9.E]+)".r
 
     val parseResults = lines.
       foldLeft(initParsing)(
@@ -71,7 +71,7 @@ case object MGF {
             }
           }
         })
-    parseResults._2.map {
+    (parseResults._2- stringIdCurrentFeature).map {
       case (feature, m) => MGFFeaturesIon(feature, m, parseResults._3(feature))
     }.toSeq
   }

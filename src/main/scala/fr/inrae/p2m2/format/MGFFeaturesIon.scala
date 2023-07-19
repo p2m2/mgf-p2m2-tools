@@ -1,3 +1,3 @@
 package fr.inrae.p2m2.format
 
-case class MGFFeaturesIon(feature : String, properties : Map[String, String], fragmentIons : Seq[(Double,Double)])
+case class MGFFeaturesIon(id : String, properties : Map[String, String], fragmentIons : Seq[(Double,Double)])
