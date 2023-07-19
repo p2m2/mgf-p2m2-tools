@@ -1,9 +1,7 @@
 package fr.inrae.p2m2.parser
 
 import fr.inrae.p2m2.format.MGFFeaturesIon
-import fr.inrae.p2m2.parser.MGF.FeaturesBufferWithCurrentKey
 
-import scala.collection.Iterator
 import scala.util.matching.Regex
 
 case object MGF {
@@ -14,7 +12,7 @@ case object MGF {
    */
   private type FeaturesBufferWithCurrentKey = (Option[String], Map[String, Map[String, String]], Map[String, Seq[(Double, Double)]])
 
-  def parse(lines: Iterator[String]): Seq[MGFFeaturesIon] = {
+  def parse(lines: Seq[String]): Seq[MGFFeaturesIon] = {
     // buffer key to store properties of the current features during parsing
     val stringIdCurrentFeature = "current_feature"
 

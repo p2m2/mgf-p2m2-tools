@@ -19,16 +19,18 @@ developers := List(
 )
 
 lazy val root = (project in file(".")).
-  //enablePlugins(ScalaJSPlugin).
+  enablePlugins(ScalaJSPlugin).
+  enablePlugins(ScalaJSBundlerPlugin).
   // add the `it` configuration
-  //configs(IntegrationTest).
+  configs(IntegrationTest).
   // add `it` tasks
-  //settings(Defaults.itSettings: _*).
+  settings(Defaults.itSettings: _*).
   // add Scala.js-specific settings and tasks to the `it` configuration
-  //settings(inConfig(IntegrationTest)(ScalaJSPlugin.testConfigSettings): _*).
+  settings(inConfig(IntegrationTest)(ScalaJSPlugin.testConfigSettings): _*).
   settings(
+    name := "mgf-parser",
+    version := "1.0",
     credentials += {
-
       val realm = scala.util.Properties.envOrElse("REALM_CREDENTIAL", "")
       val host = scala.util.Properties.envOrElse("HOST_CREDENTIAL", "")
       val login = scala.util.Properties.envOrElse("LOGIN_CREDENTIAL", "")
@@ -59,7 +61,28 @@ lazy val root = (project in file(".")).
       "com.lihaoyi" %%% "utest" % "0.8.1" % Test,
       "com.lihaoyi" %%% "scalatags" % "0.12.0",
     ),
-    testFrameworks += new TestFramework("utest.runner.Framework")
+    testFrameworks += new TestFramework("utest.runner.Framework"),
+    Compile / fastOptJS / scalaJSLinkerConfig ~= {
+      _.withOptimizer(false)
+        .withPrettyPrint(true)
+        .withSourceMap(true)
+    },
+    Compile / fullOptJS / scalaJSLinkerConfig ~= {
+      _.withSourceMap(false)
+        .withModuleKind(ModuleKind.CommonJSModule)
+    },
+    Test / npmDevDependencies ++= Seq(
+      "jsdom" -> "21.1.1",
+      "fs-extra" -> "11.1.1"
+    ),
+    Compile / scalaJSUseMainModuleInitializer := true,
+    Compile / mainClass := Some("fr.inrae.p2m2.webapp.MGFWebApp"),
+    webpackBundlingMode := BundlingMode.LibraryAndApplication(),
+    Test / requireJsDomEnv := true,
+    assembly / assemblyMergeStrategy := {
+      case PathList("META-INF", _*) => MergeStrategy.discard
+      case _ => MergeStrategy.first
+    }
   )
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
