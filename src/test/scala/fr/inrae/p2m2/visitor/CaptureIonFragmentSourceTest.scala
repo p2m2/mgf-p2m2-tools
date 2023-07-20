@@ -14,14 +14,28 @@ object CaptureIonFragmentSourceTest extends TestSuite {
       val l: Seq[MGFFeaturesIon] = (MGF.parse(lines))
 
       val f = l.filter(_.id=="Pos_1673").head
-      println(f)
+      println("=================")
+      println(f.id)
       println(PropertyIon.retentionTime(f))
       println(PropertyIon.pepMass(f))
+      println("=================")
 
-      val r = CaptureIonFragmentSource.getFragmentSourcesFromFeature(f,l)
+      val topFragSize = 300
+      val tolMz = 0.05
+      val tolRt = 2.0
+
+      val r = CaptureIonFragmentSource.
+        getFragmentSourcesFromFeature(f,l,topSizeFragmentation=topFragSize,toleranceMz = tolMz,toleranceRt = tolRt)
         r foreach {
           u => println(u.id,PropertyIon.pepMass(u),PropertyIon.retentionTime(u))
         }
+      assert( r.nonEmpty)
+      assert( r.filter( x =>
+        (PropertyIon.pepMass(x).getOrElse(1000.0) - PropertyIon.pepMass(f).getOrElse(1.0)) <  tolMz ) == r
+      )
+      assert(r.filter(x =>
+        (PropertyIon.retentionTime(x).getOrElse(1000.0) - PropertyIon.retentionTime(f).getOrElse(1.0)) < tolRt) == r
+      )
     }
   }
 }

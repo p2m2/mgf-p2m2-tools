@@ -47,6 +47,71 @@
     <h2>Input file (MGF)</h2>
     <div id="inputFilesDiv" class="centered-element"></div>
   <br/>
+    <div class="centered-element">
+      <label for="file">Downloading progress:</label>
+      <progress id="file" value="0" max="100"></progress>
+    </div>
+    <br/>
+    <div id="generalStatsDiv" class="centered-element">
+
+      <table>
+        <thead>
+        <tr>
+          <th colspan="2">General file statistics</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Number of features:</td><td><div id="numberFeatures"></div></td>
+        </tr>
+        <tr>
+          <td>Min PEPMASS:</td><td><div id="minPepmass"></div></td>
+        </tr>
+        <tr>
+          <td>Max PEPMASS:</td><td><div id="maxPepmass"></div></td>
+        </tr>
+        <tr>
+          <td>Min RTINSECONDS:</td><td><div id="minRt"></div></td>
+        </tr>
+        <tr>
+          <td>Max RTINSECONDS:</td><td><div id="maxRt"></div></td>
+        </tr>
+        <tr>
+          <td>Number of scans:</td><td><div id="nbScans"></div></td>
+        </tr>
+        <tr>
+          <td>MSLEVEL found:</td><td><div id="msLevelList"></div></td>
+        </tr>
+        <tr>
+          <td>CHARGE found:</td><td><div id="chargeList"></div></td>
+        </tr>
+        <tr>
+          <td colspan="2"><b>Information about abundance and m/z pairs of fragment ions</b></td>
+        </tr>
+        <tr>
+          <td>mean:</td><td><div id="meanFragIon"></div></td>
+        </tr>
+        <tr>
+          <td>std:</td><td><div id="stdFragIon"></div></td>
+        </tr>
+        <tr>
+          <td>min mz:</td><td><div id="minMzFragIon"></div></td>
+        </tr>
+        <tr>
+          <td>max mz:</td><td><div id="maxMzFragIon"></div></td>
+        </tr>
+        <tr>
+          <td>min abundance:</td><td><div id="minAbundanceFragIon"></div></td>
+        </tr>
+        <tr>
+          <td>max abundance:</td><td><div id="maxAbundanceFragIon"></div></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <br/>
+
     <h2> == Error message == </h2>
     <div class="centered-element">
       <textarea  id="log" rows="10" cols="80" style="color: red;"></textarea>
@@ -66,7 +131,7 @@
     }
     })();
     </script>
-    <script type="text/javascript" src="../target/scala-2.13/mgf-parser-fastopt/main.js"></script>
+    <script type="text/javascript" src="../target/scala-2.13/mgf-parser-opt/main.js"></script>
   </body>
     <footer>
       <a href="https://www6.inrae.fr/p2m2" target="_blank"><img src="p2m2.png" width="120"></a>

@@ -33,7 +33,6 @@ case object MGF {
           {
             val line = lineAndIdx._1
             val idx = lineAndIdx._2
-
             currentKeyAndFeatures match {
 
               case (v, mapPropertiesByIDFeatures , f) if line.trim.toLowerCase.contains("begin ions") =>
