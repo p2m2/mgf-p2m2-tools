@@ -9,7 +9,7 @@ object CaptureIonFragmentSourceTest extends TestSuite {
   def tests: Tests = Tests {
 
     test("getFragmentSourcesFromFeature") {
-      val resource = rsc("src/test/resources/ex3_b.mgf")
+      val resource = rsc("src/test/resources/ex3.mgf")
       val lines: Seq[String] = resource.split("\n")
       val l: Seq[MGFFeaturesIon] = (MGF.parse(lines))
 
