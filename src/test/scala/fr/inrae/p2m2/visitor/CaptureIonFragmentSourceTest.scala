@@ -20,12 +20,12 @@ object CaptureIonFragmentSourceTest extends TestSuite {
       println(PropertyIon.pepMass(f))
       println("=================")
 
-      val topFragSize = 300
+      val minAb = 2000.0
       val tolMz = 0.05
       val tolRt = 2.0
 
       val r = CaptureIonFragmentSource.
-        getFragmentSourcesFromFeature(f,l,topSizeFragmentation=topFragSize,toleranceMz = tolMz,toleranceRt = tolRt)
+        getFragmentSourcesFromFeature(f,l,minAbundance=minAb,toleranceMz = tolMz,toleranceRt = tolRt)
         r foreach {
           u => println(u.id,PropertyIon.pepMass(u),PropertyIon.retentionTime(u))
         }

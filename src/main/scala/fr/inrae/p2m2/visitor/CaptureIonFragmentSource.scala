@@ -20,15 +20,13 @@ case object CaptureIonFragmentSource {
   def getFragmentSourcesFromFeature(
                         feature : MGFFeaturesIon,
                         allFeatures : Seq[MGFFeaturesIon],
-                        topSizeFragmentation : Int = 300,
+                        minAbundance : Double = 2000.0,
                         toleranceMz : Double = 0.05,
                         toleranceRt : Double = 2.0, //1 second
                        ) : Seq[MGFFeaturesIon] = {
 
     // sort by intensity
-    val topFragIons = feature.fragmentIons.sortBy(_._2).take(topSizeFragmentation)
-
-    topFragIons flatMap {
+    feature.fragmentIons.filter(_._2>=minAbundance) flatMap {
       case ( mz: Double, _ : Double) =>
         allFeatures
           .filter( curFeat => PropertyIon.charge(curFeat) == PropertyIon.charge(feature))
