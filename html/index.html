@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>MGF Analyzer</title>
+    <style media = "screen">
+        body {
+            background: #F5F5F5;
+        }
+        h1,h2 {
+             text-align: center;
+        }
+        .canvasChart {
+            text-align: center;
+            width: 450px;
+        }
+        .gridCanvas {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 10px;
+        }
+        .centered-element{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        footer {
+          text-align: center;
+          padding: 3px;
+          //background-color: Grey;
+          color: grey;
+        }
+        textarea {
+          white-space: pre;
+        }
+    </style>
+
+  </head>
+  <header>
+    <a href="https://github.com/p2m2/" target="_blank"><img src="https://img.shields.io/badge/github-p2m2-blue.svg"/></a>
+  </header>
+  <body>
+
+  <h1><a href="javascript:window.location.reload(true)">MGF Analyzer</a></h1>
+
+  <div  id="display">
+    <h2>Input file (MGF)</h2>
+    <div id="inputFilesDiv" class="centered-element"></div>
+  <br/>
+    <h2> == Error message == </h2>
+    <div class="centered-element">
+      <textarea  id="log" rows="10" cols="80" style="color: red;"></textarea>
+    </div>
+  </div>
+    <!-- Include Scala.js compiled code -->
+  <script type="text/javascript" >
+    (function () {
+    var old = console.log;
+    var logger = document.getElementById('log');
+    console.error = function (message) {
+    if (typeof message == 'object') {
+    logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\r\n';
+    } else {
+    logger.innerHTML += message + '\r\n';
+    }
+    }
+    })();
+    </script>
+    <script type="text/javascript" src="../target/scala-2.13/mgf-parser-fastopt/main.js"></script>
+  </body>
+    <footer>
+      <a href="https://www6.inrae.fr/p2m2" target="_blank"><img src="p2m2.png" width="120"></a>
+      <a href="https://www.metabohub.fr/" target="_blank"><img src="metabohub.png" width="120"></a>
+    </footer>
+
+</html>
+
