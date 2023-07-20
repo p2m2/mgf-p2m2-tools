@@ -48,17 +48,19 @@ case object GeneralStatisticsHtmlDivManagement {
       .getElementById("chargeList").asInstanceOf[Div].innerHTML =
       listFeatures.flatMap(PropertyIon.charge).distinct.mkString(",")
 
-    val l = listFeatures.map(_.fragmentIons.length)
+    {
+        val l = listFeatures.map(_.fragmentIons.length)
 
-    val mean = (l.sum.toDouble / (l.length + 1))
-    val std = sqrt(l.map(x => (x - mean) * (x - mean)).sum / (l.length + 1))
+        val mean = (l.sum.toDouble / (l.length + 1))
+        val std = sqrt(l.map(x => (x - mean) * (x - mean)).sum / (l.length + 1))
 
-    dom
-      .document
-      .getElementById("meanFragIon").asInstanceOf[Div].innerHTML = mean.toString
-    dom
-      .document
-      .getElementById("stdFragIon").asInstanceOf[Div].innerHTML = std.toString
+        dom
+          .document
+          .getElementById("meanFragIon").asInstanceOf[Div].innerHTML = mean.toString
+        dom
+          .document
+          .getElementById("stdFragIon").asInstanceOf[Div].innerHTML = std.toString
+      }
 
     dom
       .document
@@ -79,6 +81,22 @@ case object GeneralStatisticsHtmlDivManagement {
       .document
       .getElementById("maxAbundanceFragIon").asInstanceOf[Div].innerHTML =
       listFeatures.map(_.fragmentIons.map(_._2).max).max.toString
+
+    {
+      val l : Seq[Double] = listFeatures.flatMap(_.fragmentIons.map(_._2))
+
+      val mean = (l.sum / (l.length + 1))
+      val std = sqrt(l.map(x => (x - mean) * (x - mean)).sum / (l.length + 1))
+
+      dom
+        .document
+        .getElementById("meanAbundanceFragIon").asInstanceOf[Div].innerHTML = mean.toString
+
+      dom
+        .document
+        .getElementById("stdAbundanceFragIon").asInstanceOf[Div].innerHTML = std.toString
+    }
+
 
   }
 
