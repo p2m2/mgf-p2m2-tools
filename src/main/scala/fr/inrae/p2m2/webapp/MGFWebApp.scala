@@ -32,7 +32,14 @@ object MGFWebApp {
     p.future
   }
 
+  private def setLog() : Unit = {
+    val el = dom
+      .document
+      .getElementById("log")
 
+    if (el != null) el.innerText = ""
+
+  }
   def main(args: Array[String]): Unit = {
 
     val inputTag: JsDom.TypedTag[Input] = input(
@@ -49,12 +56,9 @@ object MGFWebApp {
           val files = ev.currentTarget.asInstanceOf[HTMLInputElement].files
 
           if (files.nonEmpty) {
-            dom
-              .document
-              .getElementById("log").innerText=""
+            setLog()
 
             val lFutures = Future.sequence(files.map(f => readFileAsText(f) ))
-
             lFutures.onComplete {
               case Success(reportsGcmsInTextFormat : List[String]) =>
                 val listSourceFragment : List [String] = reportsGcmsInTextFormat.flatMap {

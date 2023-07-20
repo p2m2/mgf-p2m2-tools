@@ -3,61 +3,51 @@
   <head>
     <meta charset="UTF-8">
     <title>MGF Analyzer</title>
-    <style media = "screen">
-        body {
-            background: #F5F5F5;
-        }
-        h1,h2 {
-             text-align: center;
-        }
-        .canvasChart {
-            text-align: center;
-            width: 450px;
-        }
-        .gridCanvas {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-gap: 10px;
-        }
-        .centered-element{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        footer {
-          text-align: center;
-          padding: 3px;
-          //background-color: Grey;
-          color: grey;
-        }
-        textarea {
-          white-space: pre;
-        }
-    </style>
-
+    <link rel="stylesheet" href="p2m2.css">
   </head>
   <header>
     <a href="https://github.com/p2m2/" target="_blank"><img src="https://img.shields.io/badge/github-p2m2-blue.svg"/></a>
   </header>
   <body>
 
-  <h1><a href="javascript:window.location.reload(true)">MGF Analyzer</a></h1>
+  <div id="menu" class="centered-element">
+    <ul id="onglets">
+      <li class="active"><a href="#mgfReader" class="menuItemTop"> MGF Reader </a></li>
+      <li><a href="#generalStatsDiv" class="menuItemTop"> MGF General statistics </a></li>
+      <li><a href="#fragmentSourceDetection" class="menuItemTop"> Detection of MS features co-eluted </a></li>
+      <li><a href="#consoleMgfTools" class="menuItemTop"> Error console </a></li>
+    </ul>
+  </div>
 
-  <div  id="display">
+  <h1><a href="javascript:window.location.reload(true)">MGF P2M2 Tools</a></h1>
+
+  <div class="centered-element" >
+<!--
+  // PANE 1 - MGF Reader
+-->
+  <div id="mgfReader" class="menuItem">
     <h2>Input file (MGF)</h2>
-    <div id="inputFilesDiv" class="centered-element"></div>
-  <br/>
-    <div class="centered-element">
-      <label for="file">Downloading progress:</label>
-      <progress id="file" value="0" max="100"></progress>
-    </div>
-    <br/>
-    <div id="generalStatsDiv" class="centered-element">
-
-      <table>
+    <table>
+      <tbody>
+      <tr><td>
+        <div id="inputFilesDiv" class="centered-element"></div>
+      </td></tr>
+      <tr><td>
+        <label for="file">Downloading progress:</label>
+        <progress id="file" value="0" max="100"></progress>
+      </td></tr>
+      </tbody>
+    </table>
+  </div>
+  <!--
+    // PANE 1 - General Statistics
+  -->
+  <div id="generalStatsDiv" class="menuItem">
+    <h2>General file statistics</h2>
+    <table>
         <thead>
         <tr>
-          <th colspan="2">General file statistics</th>
+          <th colspan="2">----</th>
         </tr>
         </thead>
         <tbody>
@@ -117,26 +107,19 @@
     </div>
     <br/>
 
-    <h2> == Error message == </h2>
-    <div class="centered-element">
-      <textarea  id="log" rows="10" cols="80" style="color: red;"></textarea>
-    </div>
+  <div id="consoleMgfTools" class="menuItem">
+    <textarea  id="log" rows="10" cols="80" style="color: red;"></textarea>
   </div>
-    <!-- Include Scala.js compiled code -->
-  <script type="text/javascript" >
-    (function () {
-    var old = console.log;
-    var logger = document.getElementById('log');
-    console.error = function (message) {
-    if (typeof message == 'object') {
-    logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\r\n';
-    } else {
-    logger.innerHTML += message + '\r\n';
-    }
-    }
-    })();
-    </script>
+
+  <div id="fragmentSourceDetection" class="menuItem">
+    <h2>Fragment Source detection</h2>
+
+  </div>
+  <!-- Include static code -->
+    <script type="text/javascript" src="p2m2.js"></script>
+  <!-- Include Scala.js compiled code -->
     <script type="text/javascript" src="../target/scala-2.13/mgf-parser-opt/main.js"></script>
+  </div>
   </body>
     <footer>
       <a href="https://www6.inrae.fr/p2m2" target="_blank"><img src="p2m2.png" width="120"></a>
