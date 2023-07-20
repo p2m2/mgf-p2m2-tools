@@ -21,12 +21,6 @@ developers := List(
 lazy val root = (project in file(".")).
   enablePlugins(ScalaJSPlugin).
   enablePlugins(ScalaJSBundlerPlugin).
-  // add the `it` configuration
-  configs(IntegrationTest).
-  // add `it` tasks
-  settings(Defaults.itSettings: _*).
-  // add Scala.js-specific settings and tasks to the `it` configuration
-  settings(inConfig(IntegrationTest)(ScalaJSPlugin.testConfigSettings): _*).
   settings(
     name := "mgf-parser",
     version := "1.0",
@@ -71,14 +65,9 @@ lazy val root = (project in file(".")).
       _.withSourceMap(false)
         .withModuleKind(ModuleKind.CommonJSModule)
     },
-    Test / npmDevDependencies ++= Seq(
-      "jsdom" -> "21.1.1",
-      "fs-extra" -> "11.1.1"
-    ),
     Compile / scalaJSUseMainModuleInitializer := true,
     Compile / mainClass := Some("fr.inrae.p2m2.webapp.MGFWebApp"),
     webpackBundlingMode := BundlingMode.LibraryAndApplication(),
-    Test / requireJsDomEnv := true,
     assembly / assemblyMergeStrategy := {
       case PathList("META-INF", _*) => MergeStrategy.discard
       case _ => MergeStrategy.first

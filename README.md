@@ -14,7 +14,7 @@ npm should be installed.
 
 ```shell 
 export NODE_OPTIONS=--openssl-legacy-provider
-sbt fastOptJS::webpack
+sbt fastOptJS
 # open html/index.html
 ```
 
