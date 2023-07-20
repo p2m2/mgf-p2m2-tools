@@ -55,12 +55,14 @@ object MGFWebApp {
                   fileContent =>
                     val textByLine: Seq[String] = fileContent.split("\n")
                     val listFeatures: Seq[MGFFeaturesIon] = MGF.parse(textByLine)
+                    /*
                     listFeatures.flatMap {
                       feature =>
                         CaptureIonFragmentSource.getFragmentSourcesFromFeature(feature, listFeatures).map {
                           x => s"${feature.id},${PropertyIon.retentionTime(feature)},${x.id},${PropertyIon.retentionTime(x)}"
                         }
-                    }
+                    }*/
+                    listFeatures.map(_.id)
                 }
                 a(
                   "IsoCor file", href := "data:text/tsv;name=isocor_gcms.tsv;charset=ISO-8859-1,"

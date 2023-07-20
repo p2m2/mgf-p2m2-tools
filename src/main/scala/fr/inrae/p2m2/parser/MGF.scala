@@ -12,7 +12,13 @@ case object MGF {
    */
   private type FeaturesBufferWithCurrentKey = (Option[String], Map[String, Map[String, String]], Map[String, Seq[(Double, Double)]])
 
-  def parse(lines: Seq[String]): Seq[MGFFeaturesIon] = {
+  /**
+   *
+   * @param lines : MGF lines to parse
+   * @param listener : Function listener event that take (number of read line )
+   * @return
+   */
+  def parse(lines: Seq[String], listener : ((Int) => Unit) = ( _: Int) => {} ): Seq[MGFFeaturesIon] = {
     // buffer key to store properties of the current features during parsing
     val stringIdCurrentFeature = "current_feature"
 
@@ -21,15 +27,20 @@ case object MGF {
     val msAndIntensity: Regex = "([0-9.]+)\\s([0-9.E]+)".r
 
     val parseResults = lines.
+      zipWithIndex.
       foldLeft(initParsing)(
-        (currentKeyAndFeatures: FeaturesBufferWithCurrentKey, line: String) => {
+        (currentKeyAndFeatures: FeaturesBufferWithCurrentKey, lineAndIdx: (String, Int) ) => {
           {
+            val line = lineAndIdx._1
+            val idx = lineAndIdx._2
+
             currentKeyAndFeatures match {
 
               case (v, mapPropertiesByIDFeatures , f) if line.trim.toLowerCase.contains("begin ions") =>
                 (v,(mapPropertiesByIDFeatures - stringIdCurrentFeature) + (stringIdCurrentFeature -> Map()),f)
 
               case (Some(feature), mapPropertiesByIDFeatures, f) if line.trim.toLowerCase.contains("end ions") =>
+                listener(idx)
                 (None,
                   (mapPropertiesByIDFeatures - stringIdCurrentFeature) +
                     (feature -> mapPropertiesByIDFeatures(stringIdCurrentFeature)), f)
