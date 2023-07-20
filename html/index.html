@@ -113,6 +113,37 @@
 
   <div id="fragmentSourceDetection" class="menuItem">
     <h2>Detection of MS features co-eluted</h2>
+      <table>
+          <thead>
+          <tr>
+              <th colspan="2">----</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+              <td>
+                  <label for="minAb">min abundance (fragment ions)</label>
+                  <input type="text" id="minAb" name="minAb"/>
+                  </td>
+          </tr>
+          <tr>
+              <td>
+                  <label for="tolMz">Tolerance m/z</label>
+                  <input type="text" id="tolMz" name="tolMz".>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <label for="tolRt">Tolerance retention time</label>
+                  <input type="text" id="tolRt" name="tolRt".>
+              </td>
+          </tr>
+          <tr>
+              <td><input id="fragmentSourceDetectionSubmit" type="submit" value="Submit"/></td>
+          </tr>
+          </tbody>
+      </table>
+      <div id="fragmentSourceDetectionResults"></div>
 
   </div>
   <!-- Include static code -->
