@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>MGF Analyzer</title>
+    <link rel="stylesheet" href="p2m2.css">
+  </head>
+  <header>
+    <a href="https://github.com/p2m2/" target="_blank"><img src="https://img.shields.io/badge/github-p2m2-blue.svg"/></a>
+  </header>
+  <body>
+
+  <div id="menu" class="centered-element">
+    <ul id="onglets">
+      <li class="active"><a href="#mgfReader" class="menuItemTop"> MGF Reader </a></li>
+      <li><a href="#generalStatsDiv" class="menuItemTop"> MGF General statistics </a></li>
+      <li><a href="#fragmentSourceDetection" class="menuItemTop"> Detection of MS features co-eluted </a></li>
+      <li><a href="#consoleMgfTools" class="menuItemTop"> Error console </a></li>
+    </ul>
+  </div>
+
+  <h1><a href="javascript:window.location.reload(true)">MGF P2M2 Tools</a></h1>
+
+  <div class="centered-element" >
+<!--
+  // PANE 1 - MGF Reader
+-->
+  <div id="mgfReader" class="menuItem">
+    <h2>Input file (MGF)</h2>
+    <table>
+      <tbody>
+      <tr><td>
+        <div id="inputFilesDiv" class="centered-element"></div>
+      </td></tr>
+      <tr><td>
+        <label for="file">Downloading progress:</label>
+        <progress id="file" value="0" max="100"></progress>
+      </td></tr>
+      </tbody>
+    </table>
+  </div>
+  <!--
+    // PANE 1 - General Statistics
+  -->
+  <div id="generalStatsDiv" class="menuItem">
+    <h2>General file statistics</h2>
+    <table>
+        <thead>
+        <tr>
+          <th colspan="2">----</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Number of features:</td><td><div id="numberFeatures"></div></td>
+        </tr>
+        <tr>
+          <td>Min PEPMASS:</td><td><div id="minPepmass"></div></td>
+        </tr>
+        <tr>
+          <td>Max PEPMASS:</td><td><div id="maxPepmass"></div></td>
+        </tr>
+        <tr>
+          <td>Min RTINSECONDS:</td><td><div id="minRt"></div></td>
+        </tr>
+        <tr>
+          <td>Max RTINSECONDS:</td><td><div id="maxRt"></div></td>
+        </tr>
+        <tr>
+          <td>Number of scans:</td><td><div id="nbScans"></div></td>
+        </tr>
+        <tr>
+          <td>MSLEVEL found:</td><td><div id="msLevelList"></div></td>
+        </tr>
+        <tr>
+          <td>CHARGE found:</td><td><div id="chargeList"></div></td>
+        </tr>
+        <tr>
+          <td colspan="2"><b>Information about abundance and m/z pairs of fragment ions</b></td>
+        </tr>
+        <tr>
+          <td>mean:</td><td><div id="meanFragIon"></div></td>
+        </tr>
+        <tr>
+          <td>std:</td><td><div id="stdFragIon"></div></td>
+        </tr>
+        <tr>
+          <td>min mz:</td><td><div id="minMzFragIon"></div></td>
+        </tr>
+        <tr>
+          <td>max mz:</td><td><div id="maxMzFragIon"></div></td>
+        </tr>
+        <tr>
+          <td>min abundance:</td><td><div id="minAbundanceFragIon"></div></td>
+        </tr>
+        <tr>
+          <td>max abundance:</td><td><div id="maxAbundanceFragIon"></div></td>
+        </tr>
+        <tr>
+          <td>mean abundance:</td><td><div id="meanAbundanceFragIon"></div></td>
+        </tr>
+        <tr>
+          <td>std abundance:</td><td><div id="stdAbundanceFragIon"></div></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <br/>
+
+  <div id="consoleMgfTools" class="menuItem">
+    <textarea  id="log" rows="10" cols="80" style="color: red;"></textarea>
+  </div>
+
+  <div id="fragmentSourceDetection" class="menuItem">
+    <h2>Detection of MS features co-eluted</h2>
+      <table>
+          <thead>
+          <tr>
+              <th colspan="2">----</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+              <td>
+                  <label for="minAb">min abundance (fragment ions)</label>
+                  <input type="text" id="minAb" name="minAb"/>
+                  </td>
+          </tr>
+          <tr>
+              <td>
+                  <label for="tolMz">Tolerance m/z</label>
+                  <input type="text" id="tolMz" name="tolMz".>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <label for="tolRt">Tolerance retention time</label>
+                  <input type="text" id="tolRt" name="tolRt".>
+              </td>
+          </tr>
+          <tr>
+              <td><input id="fragmentSourceDetectionSubmit" type="submit" value="Submit"/></td>
+          </tr>
+          </tbody>
+      </table>
+      <div id="fragmentSourceDetectionResults"></div>
+
+  </div>
+  <!-- Include static code -->
+    <script type="text/javascript" src="p2m2.js"></script>
+  <!-- Include Scala.js compiled code -->
+    <script type="text/javascript" src="mgf-parser-opt-bundle.js"></script>
+  </div>
+  </body>
+    <footer>
+      <a href="https://www6.inrae.fr/p2m2" target="_blank"><img src="p2m2.png" width="120"></a>
+      <a href="https://www.metabohub.fr/" target="_blank"><img src="metabohub.png" width="120"></a>
+    </footer>
+
+</html>
+
