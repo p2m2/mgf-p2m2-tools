@@ -1,6 +1,6 @@
 
 scalaVersion := "2.13.11"
-name := "mgf-parser"
+name := "mgf-p2m2-tools"
 organization := "com.github.p2m2"
 version := "1.0"
 organizationName := "p2m2"
@@ -9,8 +9,8 @@ licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/mit-lic
 
 scmInfo := Some(
   ScmInfo(
-    url("https://github.com/p2m2/positional-carbon13-enrichment"),
-    "scm:git@github.com:p2m2/positional-carbon13-enrichment.git"
+    url("https://github.com/p2m2/mgf-p2m2-tools"),
+    "scm:git@github.com:p2m2/mgf-p2m2-tools.git"
   )
 )
 
@@ -22,7 +22,7 @@ lazy val root = (project in file(".")).
   enablePlugins(ScalaJSPlugin).
   enablePlugins(ScalaJSBundlerPlugin).
   settings(
-    name := "mgf-parser",
+    name := "mgf-p2m2-tools",
     version := "1.0",
     credentials += {
       val realm = scala.util.Properties.envOrElse("REALM_CREDENTIAL", "")

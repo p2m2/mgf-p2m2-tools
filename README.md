@@ -1,4 +1,4 @@
-# mgf-parser
+# mgf-p2m2-tools
 Scala parser for generic MGF mascot files containing MS/MS data
 
 
