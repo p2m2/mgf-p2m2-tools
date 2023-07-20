@@ -2,6 +2,7 @@ package fr.inrae.p2m2.webapp
 
 import fr.inrae.p2m2.format.MGFFeaturesIon
 import fr.inrae.p2m2.parser.MGF
+import fr.inrae.p2m2.visitor.{CaptureIonFragmentSource, PropertyIon}
 import fr.inrae.p2m2.webapp.GeneralStatisticsHtmlDivManagement.setGeneralStatistics
 import org.scalajs.dom
 import org.scalajs.dom.html.{Input, Progress}
@@ -12,6 +13,7 @@ import scalatags.JsDom.all._
 import scala.annotation.unused
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future, Promise}
+import scala.scalajs.js.URIUtils.encodeURIComponent
 import scala.util.{Failure, Success}
 
 object MGFWebApp {
@@ -73,22 +75,25 @@ object MGFWebApp {
                           .document
                           .getElementById("file").asInstanceOf[Progress].setAttribute("value", percent.toString)
                     })
-
+                    System.err.println("Stats !!!!!!!!")
                     setGeneralStatistics(listFeatures)
-
-                    /*
+                    println("Work in progress !!!!!!!!")
                     listFeatures.flatMap {
                       feature =>
                         CaptureIonFragmentSource.getFragmentSourcesFromFeature(feature, listFeatures).map {
                           x => s"${feature.id},${PropertyIon.retentionTime(feature)},${x.id},${PropertyIon.retentionTime(x)}"
                         }
-                    }*/
-                    listFeatures.map(_.id)
+                    }
+
                 }
-                /*
-                a(
-                  "IsoCor file", href := "data:text/tsv;name=isocor_gcms.tsv;charset=ISO-8859-1,"
-                    + encodeURIComponent(listSourceFragment.mkString("\n"))).render.click()*/
+
+                println(listSourceFragment)
+                  dom
+                    .document
+                    .getElementById("fragmentSourceDetection")
+                    .append(a(
+                      "MS_features_co_eluted", href := "data:text/tsv;name=isocor_gcms.tsv;charset=ISO-8859-1,"
+                        + encodeURIComponent(listSourceFragment.mkString("\n"))).render)
 
               case Failure(e) =>
                 System.err.println("failure :"+e.getMessage)

@@ -26,7 +26,7 @@ function managePanelDisplay(idDivActive) {
 (function () {
 document.body.addEventListener('click', function (evt) {
     if (evt.target.className === 'menuItemTop') {
-        console.log(evt.target.getAttribute("href"))
+        //console.log(evt.target.getAttribute("href"))
         managePanelDisplay(evt.target.getAttribute("href").substring(1))
     }
 }, false);
