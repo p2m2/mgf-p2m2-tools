@@ -6,7 +6,7 @@ orbs:
 workflows:
   compile-workflow:
     jobs:
-      - test:
+      - build:
           context:
             - DOCKER_CONTEXT
 # Define a job to be invoked later in a workflow.
