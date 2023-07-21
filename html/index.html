@@ -10,6 +10,8 @@
   </header>
   <body>
 
+  <h1><a href="javascript:window.location.reload(true)">MGF P2M2 Tools</a></h1>
+
   <div id="menu" class="centered-element">
     <ul id="onglets">
       <li class="active"><a href="#mgfReader" class="menuItemTop"> MGF Reader </a></li>
@@ -19,9 +21,7 @@
     </ul>
   </div>
 
-  <h1><a href="javascript:window.location.reload(true)">MGF P2M2 Tools</a></h1>
-
-  <div class="centered-element" >
+  <div id="boardMgfTools" class="centered-element" >
 <!--
   // PANE 1 - MGF Reader
 -->
@@ -105,7 +105,6 @@
         </tbody>
       </table>
     </div>
-    <br/>
 
   <div id="consoleMgfTools" class="menuItem">
     <textarea  id="log" rows="10" cols="80" style="color: red;"></textarea>
@@ -129,32 +128,43 @@
           <tr>
               <td>
                   <label for="tolMz">Tolerance m/z</label>
-                  <input type="text" id="tolMz" name="tolMz".>
+                  <input type="text" id="tolMz" name="tolMz">
               </td>
           </tr>
           <tr>
               <td>
                   <label for="tolRt">Tolerance retention time</label>
-                  <input type="text" id="tolRt" name="tolRt".>
+                  <input type="text" id="tolRt" name="tolRt">
               </td>
           </tr>
           <tr>
-              <td><input id="fragmentSourceDetectionSubmit" type="submit" value="Submit"/></td>
+              <td>
+                  <input id="fragmentSourceDetectionSubmit"
+                         type="submit"
+                         value="Submit"/></td>
           </tr>
           </tbody>
       </table>
       <div id="fragmentSourceDetectionResults"></div>
+    </div>
+  </div>
 
+  <!-- Message to wait results -->
+  <div id="msgWait" class="centered-element" style="font-size:largest;">
+      <!-- you can set whatever style you want on this -->
+      Loading, please wait...
+      <button onclick="waitBlock(false)">Ok</button>
   </div>
+
   <!-- Include static code -->
-    <script type="text/javascript" src="p2m2.js"></script>
+  <script type="text/javascript" src="./p2m2.js"></script>
   <!-- Include Scala.js compiled code -->
-    <script type="text/javascript" src="../target/scala-2.13/mgf-p2m2-tools-opt/main.js"></script>
-  </div>
+  <script type="text/javascript" src="../target/scala-2.13/mgf-p2m2-tools-opt/main.js"></script>
+
   </body>
     <footer>
-      <a href="https://www6.inrae.fr/p2m2" target="_blank"><img src="p2m2.png" width="120"></a>
-      <a href="https://www.metabohub.fr/" target="_blank"><img src="metabohub.png" width="120"></a>
+      <a href="https://www6.inrae.fr/p2m2" target="_blank"><img src="./p2m2.png" width="120"></a>
+      <a href="https://www.metabohub.fr/" target="_blank"><img src="./metabohub.png" width="120"></a>
     </footer>
 
 </html>
