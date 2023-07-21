@@ -21,8 +21,8 @@ case object CaptureIonFragmentSource {
                         feature : MGFFeaturesIon,
                         allFeatures : Seq[MGFFeaturesIon],
                         minAbundance : Double = 2000.0,
-                        toleranceMz : Double = 0.05,
-                        toleranceRt : Double = 2.0, //1 second
+                        toleranceMz : Double = 0.005,
+                        toleranceRt : Double = 0.1, //1 second
                        ) : Seq[MGFFeaturesIon] = {
 
     // sort by intensity
