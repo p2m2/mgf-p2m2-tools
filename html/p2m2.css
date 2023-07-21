@@ -70,3 +70,11 @@ footer {
 textarea {
   white-space: pre;
 }
+
+.results table, .results th, .results td {
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+.results th, .results td {
+  background-color: #96D4D4;
+}
