@@ -3,8 +3,9 @@ package fr.inrae.p2m2.webapp
 import fr.inrae.p2m2.format.MGFFeaturesIon
 import fr.inrae.p2m2.visitor.{CaptureIonFragmentSource, PropertyIon}
 import org.scalajs.dom
+import org.scalajs.dom.{Event, ProgressEvent}
 import org.scalajs.dom.html.Input
-import scalatags.JsDom.all._
+import scalatags.JsDom.all.{s, _}
 
 import scala.scalajs.js.URIUtils.encodeURIComponent
 
@@ -50,60 +51,67 @@ case object CaptureIonFragmentSourceDivManagement {
 }
 
 case class  CaptureIonFragmentSourceDivManagement(listFeatures: Seq[MGFFeaturesIon]) {
-  def setClickSubmitEvent(): Unit = {
-    val header="FEATURE1;RT1;MZ1;FEATURE2;RT2;MZ2;"
+
+  def fragmentSourcesFromFeature(): Unit = {
+
+    /* get parameters */
+    val minAb = dom
+      .document
+      .getElementById("minAb").asInstanceOf[Input].value.toDouble.abs
+    val tolMz = dom
+      .document
+      .getElementById("tolMz").asInstanceOf[Input].value.toDouble.abs
+    val tolRt = dom
+      .document
+      .getElementById("tolRt").asInstanceOf[Input].value.toDouble.abs
+
+    val listFS: Seq[String] = listFeatures.flatMap {
+      feature =>
+        CaptureIonFragmentSource.getFragmentSourcesFromFeature(
+          feature,
+          listFeatures,
+          minAbundance = minAb,
+          toleranceMz = tolMz,
+          toleranceRt = tolRt
+        ).map {
+          x =>
+            s"${feature.id};" +
+              s"${PropertyIon.retentionTime(feature).getOrElse(-1.0)};" +
+              s"${PropertyIon.pepMass(feature).getOrElse(-1.0)};" +
+              s"${x.id};" +
+              s"${PropertyIon.retentionTime(x).getOrElse(-1.0)};" +
+              s"${PropertyIon.pepMass(x).getOrElse(-1.0)}"
+        }
+    }
+
+    P2M2Js.waitBlock(false)
+
     dom
       .document
-      .getElementById("fragmentSourceDetectionSubmit").asInstanceOf[Input].onclick =
-      (_: dom.Event) => {
+      .getElementById("fragmentSourceDetectionResults")
+      .remove()
+    dom
+      .document
+      .getElementById("fragmentSourceDetection")
+      .append(
+        div(
+          id := "fragmentSourceDetectionResults",
+          a(
+            "MS_features_co_eluted", download := "co-eluted_features.tsv",
+            href := "data:text/tsv;charset=ISO-8859-1,"
+              + encodeURIComponent(header + "\n" + listFS.mkString("\n")))
+        ).render)
+  }
 
-        /* get parameters */
-        val minAb = dom
-          .document
-          .getElementById("minAb").asInstanceOf[Input].value.toDouble
-        val tolMz = dom
-          .document
-          .getElementById("tolMz").asInstanceOf[Input].value.toDouble
-        val tolRt = dom
-          .document
-          .getElementById("tolRt").asInstanceOf[Input].value.toDouble
+  def setClickSubmitEvent(): Unit = {
+    val inputTag = dom
+      .document
+      .getElementById("fragmentSourceDetectionSubmit").asInstanceOf[Input]
 
-        println(minAb,tolMz)
+    val header="FEATURE1;RT1;MZ1;FEATURE2;RT2;MZ2;"
 
-        val listFS : Seq[String] = listFeatures.flatMap {
-          feature =>
-            CaptureIonFragmentSource.getFragmentSourcesFromFeature(
-              feature,
-              listFeatures,
-              minAbundance=minAb,
-              toleranceMz=tolMz,
-              toleranceRt=tolRt
-            ).map {
-              x => s"${feature.id};" +
-                s"${PropertyIon.retentionTime(feature).getOrElse(-1.0)};" +
-                s"${PropertyIon.pepMass(feature).getOrElse(-1.0)};" +
-                s"${x.id};" +
-                s"${PropertyIon.retentionTime(x).getOrElse(-1.0)};" +
-                s"${PropertyIon.pepMass(x).getOrElse(-1.0)}"
-            }
-        }
-
-        dom
-          .document
-          .getElementById("fragmentSourceDetectionResults")
-          .remove()
-        dom
-          .document
-          .getElementById("fragmentSourceDetection")
-          .append(
-            div(
-              id := "fragmentSourceDetectionResults",
-              a(
-                "MS_features_co_eluted", download := "co-eluted_features.tsv",
-                href := "data:text/tsv;charset=ISO-8859-1,"
-                  + encodeURIComponent(header+"\n"+listFS.mkString("\n")))
-            ).render)
-      }
+    inputTag.addEventListener("click", (_:Event) => { P2M2Js.waitBlock(true) })
+    inputTag.addEventListener("click", (_:Event) => { fragmentSourcesFromFeature() })
 
   }
 }
