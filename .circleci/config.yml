@@ -1,7 +1,14 @@
 # Scala CircleCI 2.0 configuration file
 # See: https://circleci.com/docs/sample-config/
 version: 2
-
+orbs:
+  node: circleci/node@5.1.0
+workflows:
+  compile-workflow:
+    jobs:
+      - test:
+          context:
+            - DOCKER_CONTEXT
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
@@ -11,6 +18,9 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
+        auth:
+          username: ${DOCKER_USER}
+          password: ${DOCKER_PASS}
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -28,7 +38,8 @@ jobs:
     # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
       - checkout
-
+      - node/install:
+          node-version: '19.6'
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -44,4 +55,8 @@ jobs:
           key: v1-dependencies--{{ checksum "build.sbt" }}
 
       # run tests!
-      - run: cat /dev/null | sbt test:test
+      - run:
+          name: Compile/Tests
+          command: |
+            export NODE_OPTIONS=--openssl-legacy-provider
+            cat /dev/null | sbt test:test
