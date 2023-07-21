@@ -2,7 +2,6 @@ package fr.inrae.p2m2.webapp
 
 import fr.inrae.p2m2.format.MGFFeaturesIon
 import fr.inrae.p2m2.parser.MGF
-import fr.inrae.p2m2.visitor.{CaptureIonFragmentSource, PropertyIon}
 import fr.inrae.p2m2.webapp.GeneralStatisticsHtmlDivManagement.setGeneralStatistics
 import org.scalajs.dom
 import org.scalajs.dom.html.{Input, Progress}
@@ -11,9 +10,8 @@ import scalatags.JsDom
 import scalatags.JsDom.all._
 
 import scala.annotation.unused
-import scala.concurrent.ExecutionContext.Implicits.global
+import org.scalajs.macrotaskexecutor.MacrotaskExecutor.Implicits._
 import scala.concurrent.{ExecutionContext, Future, Promise}
-import scala.scalajs.js.URIUtils.encodeURIComponent
 import scala.util.{Failure, Success}
 
 object MGFWebApp {
@@ -84,6 +82,8 @@ object MGFWebApp {
                 setGeneralStatistics(listSourceFragment)
                 CaptureIonFragmentSourceDivManagement(listSourceFragment).setClickSubmitEvent()
 
+              case Success(some) =>
+                System.err.println(s" * This case match is not managed : ${some.toString} .")
               case Failure(e) =>
                 System.err.println("failure :"+e.getMessage)
             }
