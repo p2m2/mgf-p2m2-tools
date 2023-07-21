@@ -1,4 +1,6 @@
 # mgf-p2m2-tools
+[![CircleCI](https://circleci.com/gh/p2m2/mgf-p2m2-tools.svg?style=shield)](https://circleci.com/gh/p2m2/mgf-p2m2-tools)
+
 Scala parser for generic MGF mascot files containing MS/MS data
 
 https://p2m2.github.io/mgf-p2m2-tools/
