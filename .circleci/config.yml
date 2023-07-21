@@ -1,6 +1,6 @@
 # Scala CircleCI 2.0 configuration file
 # See: https://circleci.com/docs/sample-config/
-version: 2
+version: 2.1
 orbs:
   node: circleci/node@5.1.0
 workflows:
@@ -17,7 +17,7 @@ jobs:
     # See: https://circleci.com/docs/configuration-reference/#docker-machine-macos-windows-executor
     docker:
       # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
+      - image: cimg/openjdk:19.0.2
         auth:
           username: ${DOCKER_USER}
           password: ${DOCKER_PASS}
