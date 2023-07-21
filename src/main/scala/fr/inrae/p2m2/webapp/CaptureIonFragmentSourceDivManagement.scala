@@ -20,7 +20,7 @@ case object CaptureIonFragmentSourceDivManagement {
 
     dom
       .document
-      .getElementById("tolMz").asInstanceOf[Input].value = (0.05).toString
+      .getElementById("tolMz").asInstanceOf[Input].value = (0.001).toString
 
     dom
       .document
@@ -28,7 +28,7 @@ case object CaptureIonFragmentSourceDivManagement {
 
     dom
       .document
-      .getElementById("tolRt").asInstanceOf[Input].value = (2.0).toString
+      .getElementById("tolRt").asInstanceOf[Input].value = (0.5).toString
 
     dom
       .document

@@ -79,7 +79,7 @@ object MGFWebApp {
                           .document
                           .getElementById("file").asInstanceOf[Progress].setAttribute("value", percent.toString)
                     })
-                    listFeatures
+                    listFeatures.distinct
                 }
                 setGeneralStatistics(listSourceFragment)
                 CaptureIonFragmentSourceDivManagement(listSourceFragment).setClickSubmitEvent()
