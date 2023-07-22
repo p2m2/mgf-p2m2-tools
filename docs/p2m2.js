@@ -49,3 +49,19 @@ managePanelDisplay("mgfReader")
     }
    }
 })();
+
+/** Manage Msf Wait */
+function waitBlock(bool) {
+    if (bool) {
+        document.getElementById('boardMgfTools').style.display = "none";
+        document.getElementById('msgWait').style.display = "block";
+    } else {
+        document.getElementById('boardMgfTools').style.display = "block";
+        document.getElementById('msgWait').style.display = "none";
+    }
+}
+
+(function () {
+    waitBlock(false);
+})();
+

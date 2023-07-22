@@ -28,6 +28,6 @@ sbt fullOptJS
 
 ```shell 
 sbt fullOptJS::webpack
-cp target/scala-2.13/scalajs-bundler/main/mgf-parser-opt-bundle.js docs/
+cp target/scala-2.13/scalajs-bundler/main/mgf-p2m2-tools-opt-bundle.js docs/
 # open docs/index.html
 ```
