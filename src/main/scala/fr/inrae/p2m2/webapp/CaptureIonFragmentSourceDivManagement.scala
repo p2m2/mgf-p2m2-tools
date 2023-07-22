@@ -119,15 +119,22 @@ case class  CaptureIonFragmentSourceDivManagement(listFeatures: Seq[MGFFeaturesI
           tr( th("FEATURE"), th("RTINSECONDS"),th("PEPMASS"),th("FRAG. SOURCE") ),
             listFeaturesAndFragmentSource.map {
               case (feature, lx) =>
-                val winHtml = "<!DOCTYPE html>\n" + MGFFeaturesIonDivInformation.information(feature).innerHTML
+                val winHtml = "<!DOCTYPE html>\n" + MGFFeaturesIonDivInformation.information(feature).outerHTML
                 val winUrl = URL.createObjectURL(
-                  new Blob(js.Array(winHtml)))//,new BlobPropertyBag { `type` -> "text/html"}))
+                  new Blob(js.Array(winHtml),new BlobPropertyBag { `type` -> "text/html"}))
 
                 tr(
                   td(
                     a(href:=winUrl,target:="_blank" , feature.id)),
                   td(PropertyIon.retentionTime(feature)),td(PropertyIon.pepMass(feature))
-                  ,td(lx.map( x => x.id).mkString(","))
+                  ,td(lx.map( x => {
+                    val winHtml = "<!DOCTYPE html>\n" + MGFFeaturesIonDivInformation.information(x).outerHTML
+                    val winUrl = URL.createObjectURL(
+                      new Blob(js.Array(winHtml), new BlobPropertyBag {
+                        `type` -> "text/html"
+                      }))
+                    a(href:=winUrl,target:="_blank" , x.id)
+                  }))
                 )
             }
         ).render)

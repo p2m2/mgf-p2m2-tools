@@ -1,26 +1,24 @@
 package fr.inrae.p2m2.webapp
 
 import fr.inrae.p2m2.format.MGFFeaturesIon
-import fr.inrae.p2m2.visitor.PropertyIon
 import org.scalajs.dom
-import org.scalajs.dom.{Event, MouseEvent}
+import org.scalajs.dom.MouseEvent
 import org.scalajs.dom.html.Canvas
-import scalatags.JsDom
 import scalatags.JsDom.all._
 
 case object CanvasRenderingSpectreMS {
-  type Ctx2D =
+  private type Ctx2D =
     dom.CanvasRenderingContext2D
 
   val border : Int = 10
 
-  def initCanvas(idC: String) : Canvas = {
+  private def initCanvas(idC: String) : Canvas = {
     canvas(
       id := idC
     ).render
   }
 
-  def ctxSetAxes(ctx : Ctx2D) : Ctx2D = {
+  private def ctxSetAxes(ctx : Ctx2D) : Ctx2D = {
     // Axes
     ctx.strokeStyle = "black"
     ctx.lineWidth = 2
@@ -52,7 +50,7 @@ case object CanvasRenderingSpectreMS {
 
   }
 
-  def pic(ctx : Ctx2D,x: Double,y: Double): Unit = {
+  private def pic(ctx : Ctx2D, x: Double, y: Double): Unit = {
     val h = ctx.canvas.height - border
 
     ctx.beginPath()
@@ -94,14 +92,11 @@ case object CanvasRenderingSpectreMS {
     ctx.lineWidth = 2
 
     feature.fragmentIons.foreach {
-      case (mz : Double,abundance : Double) => {
-
+      case (mz : Double,abundance : Double) =>
         val x: Double = (mz * (w- border)) / maxMz
         val y: Double = (abundance * (h- border)) / maxIntensity
-
         println(x, y)
         pic(ctx, x, y)
-      }
     }
     canvasPlotFeatureFragmentIons
   }
