@@ -54,6 +54,7 @@ lazy val root = (project in file(".")).
     libraryDependencies ++= Seq(
       "com.lihaoyi" %%% "utest" % "0.8.1" % Test,
       "com.lihaoyi" %%% "scalatags" % "0.12.0",
+      "org.scala-js" %%% "scala-js-macrotask-executor" % "1.1.1"
     ),
     testFrameworks += new TestFramework("utest.runner.Framework"),
     Compile / fastOptJS / scalaJSLinkerConfig ~= {
