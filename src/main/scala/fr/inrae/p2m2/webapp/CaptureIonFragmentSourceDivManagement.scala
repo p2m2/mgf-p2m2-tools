@@ -15,7 +15,7 @@ case object CaptureIonFragmentSourceDivManagement {
   def setup() {
     dom
       .document
-      .getElementById("minAb").asInstanceOf[Input].value = (5000.0).toString
+      .getElementById("minAb").asInstanceOf[Input].value = (4000.0).toString
 
     dom
       .document
